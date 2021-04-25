@@ -18,6 +18,7 @@
 		D3CB611D26357DAD005EFC8B /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB611C26357DAD005EFC8B /* ConversationsController.swift */; };
 		D3CB61292635D458005EFC8B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB61282635D458005EFC8B /* LoginController.swift */; };
 		D3CB612E2635D471005EFC8B /* RegristrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB612D2635D471005EFC8B /* RegristrationController.swift */; };
+		D3CB61332635DBE7005EFC8B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB61322635DBE7005EFC8B /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		D3CB611C26357DAD005EFC8B /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
 		D3CB61282635D458005EFC8B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		D3CB612D2635D471005EFC8B /* RegristrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegristrationController.swift; sourceTree = "<group>"; };
+		D3CB61322635DBE7005EFC8B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 		D3CB611626357CD7005EFC8B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D3CB61322635DBE7005EFC8B /* Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				D3CB611D26357DAD005EFC8B /* ConversationsController.swift in Sources */,
 				D3CB60DE26357C93005EFC8B /* SceneDelegate.swift in Sources */,
 				D3CB61292635D458005EFC8B /* LoginController.swift in Sources */,
+				D3CB61332635DBE7005EFC8B /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
