@@ -70,8 +70,33 @@ class ConversationsController: UIViewController {
         view.addSubview(tableView)
         tableView.frame = view.frame
         
+        tableView.delegate = self
+        tableView.dataSource = self
         
     }
+}
+
+
+extension ConversationsController : UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: resuseIndetifier, for: indexPath)
+        cell.textLabel?.text = "Cell \(indexPath.row)"
+        return cell
+    }
+    
+    
+}
+
+extension ConversationsController : UITableViewDelegate{
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected row \(indexPath.row)")
+    }
+    
 }
 
 
