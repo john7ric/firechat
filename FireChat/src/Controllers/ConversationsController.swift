@@ -22,14 +22,12 @@ class ConversationsController: UIViewController {
         
     }
     
-    
     // MARK: - Selectors
     
     @objc func showProfile(){
         print("show profile")
     }
 
-    
     // MARK: - Helpers
     
     func configureUI() {
