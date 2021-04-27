@@ -18,6 +18,28 @@ class LoginController: UIViewController {
         return iv
     }()
     
+    private let emailContainer : UIView = {
+        let emailView = UIView()
+        emailView.backgroundColor = .blue
+        emailView.setHeight(height: 50)
+        return emailView
+    }()
+    
+    private let passowrdContainer : UIView = {
+        let passowrdView = UIView()
+        passowrdView.backgroundColor = .cyan
+        passowrdView.setHeight(height: 50)
+        return passowrdView
+    }()
+    
+    private let loginButton : UIButton = {
+        let loginButton = UIButton(type: .system)
+        loginButton.backgroundColor = .yellow
+        loginButton.setHeight(height: 50)
+        
+        return loginButton
+    }()
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -31,12 +53,21 @@ class LoginController: UIViewController {
         navigationController?.navigationBar.barStyle = .black
         configureGradientLayer()
         
+        /// added icon image view
         view.addSubview(iconImage)
-        iconImage.translatesAutoresizingMaskIntoConstraints = false
-        iconImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        iconImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        iconImage.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        iconImage.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        iconImage.centerX(inView: view)
+        iconImage.anchor(top: view.safeAreaLayoutGuide
+                            .topAnchor,paddingTop: 32)
+        iconImage.setDimensions(height: 120, width: 120)
+        
+        /// sets up the container stack for form views
+        let containerStack = UIStackView(arrangedSubviews: [emailContainer, passowrdContainer, loginButton])
+        containerStack.axis = .vertical
+        containerStack.spacing = 16
+        
+        view.addSubview(containerStack)
+        containerStack.anchor(top: iconImage.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        
         
     }
     
