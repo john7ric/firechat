@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 private let resuseIndetifier = "conversationsCell"
 
@@ -19,6 +20,7 @@ class ConversationsController: UIViewController {
     // MARK: - LifeCycle Methods
     override func viewDidLoad() {
         configureUI()
+        authenticateUser()
         
     }
     
@@ -26,10 +28,30 @@ class ConversationsController: UIViewController {
     
     @objc func showProfile(){
         print("show profile")
+        do {
+            try Auth.auth().signOut()
+        } catch  {
+            print("DEBUG: Error signing out")
+        }
     }
 
     // MARK: - Helpers
     
+    fileprivate func presentLoginController() {
+        DispatchQueue.main.async {
+            let controller = LoginController()
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
+    
+    func authenticateUser()  {
+        if (Auth.auth().currentUser?.uid == nil){
+         presentLoginController()
+        }
+    }
+        
     func configureUI() {
         view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         configureNavigationBar()
