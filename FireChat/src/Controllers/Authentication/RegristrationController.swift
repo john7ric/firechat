@@ -39,7 +39,7 @@ class RegistrationController: UIViewController{
     }()
     
     private let loginButton : UIButton = {
-        return CustomButton(title: "Log in")
+        return CustomButton(title: "Sign up")
     }()
     
     private let emailTextField : CustomTextField =  CustomTextField(placeholder: "email")
@@ -49,11 +49,7 @@ class RegistrationController: UIViewController{
         tf.isSecureTextEntry = true
         return tf
     }()
-    private let fullnameTextfield : CustomTextField = {
-        let tf = CustomTextField(placeholder: "full name")
-        tf.isSecureTextEntry = true
-        return tf
-    }()
+    private let fullnameTextfield : CustomTextField = CustomTextField(placeholder: "full name")
     
     private let alreadyHaveAccountBtn : UIButton = {
         let btn = UIButton(type: .system)
