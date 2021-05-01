@@ -30,6 +30,7 @@ class ConversationsController: UIViewController {
         print("show profile")
         do {
             try Auth.auth().signOut()
+            self.presentLoginController()
         } catch  {
             print("DEBUG: Error signing out")
         }

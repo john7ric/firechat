@@ -11,6 +11,7 @@ protocol AutheticationControllerProtocol {
 }
 
 import UIKit
+import Firebase
 
 class LoginController: UIViewController {
     
@@ -77,6 +78,7 @@ class LoginController: UIViewController {
         
         /// sets up the container stack for form views
         let containerStack = UIStackView(arrangedSubviews: [emailContainer, passowrdContainer, loginButton])
+        loginButton.addTarget(self, action: #selector(loginHandler), for: .touchUpInside)
         containerStack.axis = .vertical
         containerStack.spacing = 16
         
@@ -91,9 +93,26 @@ class LoginController: UIViewController {
         
     }
     
-
     
+
     //MARK: - Selectors
+    
+    @objc func loginHandler(){
+        
+        guard let email = emailTextField.text else { return }
+        guard let pwd = passwordTextField.text else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: pwd) { (result, error) in
+            
+            if let error = error {
+                print("Debug: error in log in \(error.localizedDescription)")
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+    }
+
     
     @objc func textDidUpdate(sender : UITextField){
         if sender == emailTextField {
