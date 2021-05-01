@@ -22,7 +22,7 @@ class RegistrationController: UIViewController{
     }()
     
     private lazy var usernameContainer : UIView = {
-        return InputContainerView(image: #imageLiteral(resourceName: "ic_mail_outline_white_2x"), textField: usernameTextField)
+        return InputContainerView(image: #imageLiteral(resourceName: "ic_person_outline_white_2x"), textField: usernameTextField)
     }()
 
     private lazy var emailContainer : UIView = {
@@ -32,8 +32,8 @@ class RegistrationController: UIViewController{
     private lazy var pwdContainer : UIView = {
         return InputContainerView(image: #imageLiteral(resourceName: "ic_lock_outline_white_2x"), textField: pwdTextField)
     }()
-    private lazy var confirmPwdContainer : UIView = {
-        return InputContainerView(image: #imageLiteral(resourceName: "ic_lock_outline_white_2x"), textField: confirmPwdTextField)
+    private lazy var fullenameContainer : UIView = {
+        return InputContainerView(image: #imageLiteral(resourceName: "ic_person_outline_white_2x"), textField: fullnameTextfield)
     }()
     
     private let loginButton : UIButton = {
@@ -47,8 +47,8 @@ class RegistrationController: UIViewController{
         tf.isSecureTextEntry = true
         return tf
     }()
-    private let confirmPwdTextField : CustomTextField = {
-        let tf = CustomTextField(placeholder: "confirm password")
+    private let fullnameTextfield : CustomTextField = {
+        let tf = CustomTextField(placeholder: "full name")
         tf.isSecureTextEntry = true
         return tf
     }()
@@ -86,7 +86,11 @@ class RegistrationController: UIViewController{
         imagePickerButton.setDimensions(height: 200, width: 200)
         
         /// sets up the container stack for form views
-        let containerStack = UIStackView(arrangedSubviews: [usernameContainer,emailContainer, pwdContainer, confirmPwdContainer, loginButton])
+        let containerStack = UIStackView(arrangedSubviews: [usernameContainer,
+                                                            fullenameContainer,
+                                                            emailContainer,
+                                                            pwdContainer,
+                                                            loginButton])
         containerStack.axis = .vertical
         containerStack.spacing = 16
         
