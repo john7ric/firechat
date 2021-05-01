@@ -11,6 +11,8 @@ class RegistrationController: UIViewController{
     
     //MARK: - properties
     
+    private var viewModel : RegistrationViewModel = RegistrationViewModel()
+    
     private let imagePickerButton : UIButton = {
         
         let btn = UIButton(type: .system)
@@ -65,7 +67,9 @@ class RegistrationController: UIViewController{
     //MARK: - lifecycle
     
     override func viewDidLoad() {
-        configureUI()    }
+        configureUI()
+        
+    }
     
     
     //MARK: - helpers
@@ -100,7 +104,16 @@ class RegistrationController: UIViewController{
         view.addSubview(alreadyHaveAccountBtn)
         alreadyHaveAccountBtn.addTarget(self, action: #selector(navigateToLogin), for: .touchUpInside)
         alreadyHaveAccountBtn.anchor( left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
+        configureNotificationObservers()
         
+    }
+    
+    func configureNotificationObservers(){
+        emailTextField.addTarget(self, action: #selector(textDidUpdate), for: .editingChanged)
+        pwdTextField.addTarget(self, action: #selector(textDidUpdate), for: .editingChanged)
+        fullnameTextfield.addTarget(self, action: #selector(textDidUpdate), for: .editingChanged)
+        usernameTextField.addTarget(self, action: #selector(textDidUpdate), for: .editingChanged)
+
     }
     
     @objc func pickImage(){
@@ -114,6 +127,22 @@ class RegistrationController: UIViewController{
     
     @objc func navigateToLogin(){
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func textDidUpdate(sender: UITextField){
+        switch sender {
+        case usernameTextField:
+            viewModel.username = sender.text
+        case fullnameTextfield:
+            viewModel.fullname = sender.text
+        case emailTextField:
+            viewModel.email = sender.text
+        case pwdTextField:
+            viewModel.password = sender.text
+        default:
+            break
+        }
+        validateForm()
     }
     
     
@@ -135,5 +164,21 @@ extension RegistrationController : UIImagePickerControllerDelegate{
 
     //MARK: - UINavigationControllerDelegate
 extension RegistrationController : UINavigationControllerDelegate{
+    
+}
+
+    //MARK: - AutheticationControllerProtocol
+
+extension RegistrationController : AutheticationControllerProtocol{
+    
+    func validateForm() {
+        if viewModel.isFormEnabled {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }else{
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+        }
+    }
     
 }

@@ -19,7 +19,7 @@ class CustomTextField: UITextField {
         keyboardAppearance = .dark
         self.borderStyle = .none
         font = UIFont.systemFont(ofSize: 16)
-        attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white.withAlphaComponent(0.7)])
         
     }
 }
