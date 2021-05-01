@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -121,7 +121,6 @@
 				DBDA678B11A9EEFB3C9D41E8 /* Pods-FireChatTests.debug.xcconfig */,
 				3AE57CFF5558F0CE856476CB /* Pods-FireChatTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

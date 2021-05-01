@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class RegistrationController: UIViewController{
     
@@ -23,6 +24,8 @@ class RegistrationController: UIViewController{
         
     }()
     
+    private var profilePicture : UIImage?
+    
     private lazy var usernameContainer : UIView = {
         return InputContainerView(image: #imageLiteral(resourceName: "ic_person_outline_white_2x"), textField: usernameTextField)
     }()
@@ -38,7 +41,7 @@ class RegistrationController: UIViewController{
         return InputContainerView(image: #imageLiteral(resourceName: "ic_person_outline_white_2x"), textField: fullnameTextfield)
     }()
     
-    private let loginButton : UIButton = {
+    private let signUpButton : UIButton = {
         return CustomButton(title: "Sign up")
     }()
     
@@ -90,7 +93,7 @@ class RegistrationController: UIViewController{
                                                             fullenameContainer,
                                                             emailContainer,
                                                             pwdContainer,
-                                                            loginButton])
+                                                            signUpButton])
         containerStack.axis = .vertical
         containerStack.spacing = 16
         
@@ -101,6 +104,7 @@ class RegistrationController: UIViewController{
         alreadyHaveAccountBtn.addTarget(self, action: #selector(navigateToLogin), for: .touchUpInside)
         alreadyHaveAccountBtn.anchor( left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
         configureNotificationObservers()
+        signUpButton.addTarget(self, action: #selector(registrationHandler), for: .touchUpInside)
         
     }
     
@@ -112,14 +116,81 @@ class RegistrationController: UIViewController{
 
     }
     
+    
+
+    
+    //MARK: - selectors
+    
+    /// this method here handles the registration button click
+    /// first uploads the profile pic uploaded and get the image url
+    /// On its success block it creates the user , which is chained with
+    /// updating the user data from form  for the corresponding user
+    @objc func registrationHandler(){
+        
+        
+        guard let email = emailTextField.text else { return }
+        guard let password = pwdTextField.text else { return }
+        guard let username = emailTextField.text?.lowercased() else { return }
+        guard let fullname = fullnameTextfield.text else { return }
+        guard let profilePictureData = profilePicture?.jpegData(compressionQuality: 0.3) else { return }
+        
+        //creates the filename
+        
+        let filename = UUID().uuidString;
+        let ref = Storage.storage().reference(withPath: "/profile_path/\(filename)")
+        
+        ref.putData(profilePictureData, metadata: nil) { (data, error) in
+            
+            if let error = error {
+                print("DEBUG : failed to load profile picture with path \(error.localizedDescription)")
+                return
+            }
+            
+            ref.downloadURL { (url, error) in
+                
+                guard let profileImageUrl = url?.absoluteString else { return }
+                
+                /// the proifile image upload is done
+                /// now creating the user with the given email and password
+                
+                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                    if let error = error{
+                        print("DEBUG: create user failed with error \(error.localizedDescription)")
+                    }
+                    
+                    guard let userId = result?.user.uid else { return }
+                    
+                    let dataToPost : [String: Any] = ["email" : email,
+                                                      "password": password,
+                                                      "username": username,
+                                                      "fullname" : fullname,
+                                                      "profileImageUrl": profileImageUrl]
+                    Firestore.firestore().collection("users").document(userId).setData(dataToPost) { (error) in
+                        if let error = error{
+                            print("DEBUG: store user details failed with error \(error.localizedDescription)")
+                            return
+                        }
+                        
+                        print("DEBUG: create user successful")
+                    }
+                    
+                }
+                
+                
+            }
+        }
+        
+        
+        
+    }
+    
+    
     @objc func pickImage(){
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         navigationController?.present(imagePickerController, animated: true)
     }
     
-    
-    //MARK: - selectors
     
     @objc func navigateToLogin(){
         navigationController?.popViewController(animated: true)
@@ -151,6 +222,7 @@ extension RegistrationController : UIImagePickerControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image : UIImage? = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         picker.dismiss(animated: true)
+        profilePicture = image
         imagePickerButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         imagePickerButton.layer.borderColor = UIColor.white.cgColor
         imagePickerButton.layer.cornerRadius = 200/2
@@ -169,11 +241,11 @@ extension RegistrationController : AutheticationControllerProtocol{
     
     func validateForm() {
         if viewModel.isFormEnabled {
-            loginButton.isEnabled = true
-            loginButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+            signUpButton.isEnabled = true
+            signUpButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
         }else{
-            loginButton.isEnabled = false
-            loginButton.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+            signUpButton.isEnabled = false
+            signUpButton.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
         }
     }
     
