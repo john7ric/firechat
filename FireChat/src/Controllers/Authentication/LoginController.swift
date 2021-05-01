@@ -11,6 +11,8 @@ class LoginController: UIViewController {
     
     //MARK: - Properties
     
+    private var viewModel :LoginViewModel = LoginViewModel()
+    
     private let iconImage : UIImageView =  {
         let iv  = UIImageView()
         iv.tintColor = .white
@@ -27,15 +29,7 @@ class LoginController: UIViewController {
     }()
     
     private let loginButton : UIButton = {
-        let loginButton = UIButton(type: .system)
-        loginButton.backgroundColor = .red
-        loginButton.layer.cornerRadius = 5
-        loginButton.setTitle("Log in", for: .normal)
-        loginButton.titleLabel?.textColor = .white
-        loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        loginButton.setHeight(height: 50)
-        
-        return loginButton
+        return CustomButton(title: "Log in")
     }()
     
     private let emailTextField : CustomTextField =  CustomTextField(placeholder: "email")
@@ -44,6 +38,15 @@ class LoginController: UIViewController {
         let tf = CustomTextField(placeholder: "password")
         tf.isSecureTextEntry = true
         return tf
+    }()
+    
+    private let dontHaveAccountBtn : UIButton = {
+        let btn = UIButton(type: .system)
+        let titleText : NSMutableAttributedString = NSMutableAttributedString(string: "Dont have an account ?", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
+        titleText.append(NSAttributedString(string: " Sign Up", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: UIColor.white]))
+        btn.setAttributedTitle(titleText, for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        return btn
     }()
     
     
@@ -75,19 +78,38 @@ class LoginController: UIViewController {
         view.addSubview(containerStack)
         containerStack.anchor(top: iconImage.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
         
+        view.addSubview(dontHaveAccountBtn)
+        dontHaveAccountBtn.addTarget(self, action: #selector(navigateToSignUp), for: .touchUpInside)
+        dontHaveAccountBtn.anchor( left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
+        emailTextField.addTarget(self, action: #selector(textDidUpdate), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidUpdate), for: .editingChanged)
         
     }
     
-    func configureGradientLayer(){
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.systemPink.cgColor, UIColor.systemPurple.cgColor]
-        gradientLayer.locations = [0,1]
-        view.layer.addSublayer(gradientLayer)
-        gradientLayer.frame = view.frame
-        
+    func validateForm(){
+        if viewModel.isFormEnabled {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }else{
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+        }
     }
-    
     
     //MARK: - Selectors
+    
+    @objc func textDidUpdate(sender : UITextField){
+        if sender == emailTextField {
+            viewModel.email = sender.text
+        }else{
+            viewModel.password = sender.text
+        }
+        validateForm()
+    }
+    
+    @objc func navigateToSignUp(){
+        let registrationController : RegistrationController = RegistrationController()
+        navigationController?.pushViewController(registrationController, animated: true)
+    }
+    
 }

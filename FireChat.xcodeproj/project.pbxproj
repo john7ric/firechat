@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D323B2D2263BC0B500307AE7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D323B2D1263BC0B500307AE7 /* CustomButton.swift */; };
 		D39BD3902639BCF20040220C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D39BD38F2639BCF20040220C /* Assets.xcassets */; };
 		D39BD3952639BD3E0040220C /* InputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39BD3942639BD3E0040220C /* InputContainerView.swift */; };
 		D39BD39A2639C0460040220C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39BD3992639C0460040220C /* CustomTextField.swift */; };
@@ -21,6 +22,7 @@
 		D3CB61292635D458005EFC8B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB61282635D458005EFC8B /* LoginController.swift */; };
 		D3CB612E2635D471005EFC8B /* RegristrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB612D2635D471005EFC8B /* RegristrationController.swift */; };
 		D3CB61332635DBE7005EFC8B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB61322635DBE7005EFC8B /* Extensions.swift */; };
+		D3CCE57E263CFA5500E19DF6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CCE57D263CFA5500E19DF6 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D323B2D1263BC0B500307AE7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		D39BD38F2639BCF20040220C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D39BD3942639BD3E0040220C /* InputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContainerView.swift; sourceTree = "<group>"; };
 		D39BD3992639C0460040220C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -61,6 +64,7 @@
 		D3CB61282635D458005EFC8B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		D3CB612D2635D471005EFC8B /* RegristrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegristrationController.swift; sourceTree = "<group>"; };
 		D3CB61322635DBE7005EFC8B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D3CCE57D263CFA5500E19DF6 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +187,7 @@
 			children = (
 				D39BD3942639BD3E0040220C /* InputContainerView.swift */,
 				D39BD3992639C0460040220C /* CustomTextField.swift */,
+				D323B2D1263BC0B500307AE7 /* CustomButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,6 +195,7 @@
 		D3CB611A26357CDE005EFC8B /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				D3CCE57D263CFA5500E19DF6 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -342,8 +348,10 @@
 			files = (
 				D3CB60E026357C93005EFC8B /* ViewController.swift in Sources */,
 				D39BD3952639BD3E0040220C /* InputContainerView.swift in Sources */,
+				D3CCE57E263CFA5500E19DF6 /* LoginViewModel.swift in Sources */,
 				D3CB612E2635D471005EFC8B /* RegristrationController.swift in Sources */,
 				D3CB60DC26357C93005EFC8B /* AppDelegate.swift in Sources */,
+				D323B2D2263BC0B500307AE7 /* CustomButton.swift in Sources */,
 				D3CB611D26357DAD005EFC8B /* ConversationsController.swift in Sources */,
 				D3CB60DE26357C93005EFC8B /* SceneDelegate.swift in Sources */,
 				D3CB61292635D458005EFC8B /* LoginController.swift in Sources */,
