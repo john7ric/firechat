@@ -11,13 +11,15 @@ class RegistrationController: UIViewController{
     
     //MARK: - properties
     
-    private let iconImage : UIImageView =  {
-        let iv  = UIImageView()
-        iv.tintColor = .white
-        iv.image = #imageLiteral(resourceName: "plus_photo")
-        return iv
+    private let imagePickerButton : UIButton = {
+        
+        let btn = UIButton(type: .system)
+        btn.clipsToBounds = true
+        btn.tintColor = .white
+        return btn
+        
+        
     }()
-    
     
     private lazy var usernameContainer : UIView = {
         return InputContainerView(image: #imageLiteral(resourceName: "ic_mail_outline_white_2x"), textField: usernameTextField)
@@ -75,11 +77,13 @@ class RegistrationController: UIViewController{
         configureGradientLayer()
         
         /// added icon image view
-        view.addSubview(iconImage)
-        iconImage.centerX(inView: view)
-        iconImage.anchor(top: view.safeAreaLayoutGuide
+        view.addSubview(imagePickerButton)
+        imagePickerButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
+        imagePickerButton.setImage(#imageLiteral(resourceName: "plus_photo"), for: .normal)
+        imagePickerButton.centerX(inView: view)
+        imagePickerButton.anchor(top: view.safeAreaLayoutGuide
                             .topAnchor,paddingTop: 32)
-        iconImage.setDimensions(height: 200, width: 200)
+        imagePickerButton.setDimensions(height: 200, width: 200)
         
         /// sets up the container stack for form views
         let containerStack = UIStackView(arrangedSubviews: [usernameContainer,emailContainer, pwdContainer, confirmPwdContainer, loginButton])
@@ -87,12 +91,18 @@ class RegistrationController: UIViewController{
         containerStack.spacing = 16
         
         view.addSubview(containerStack)
-        containerStack.anchor(top: iconImage.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        containerStack.anchor(top: imagePickerButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
         
         view.addSubview(alreadyHaveAccountBtn)
         alreadyHaveAccountBtn.addTarget(self, action: #selector(navigateToLogin), for: .touchUpInside)
         alreadyHaveAccountBtn.anchor( left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
         
+    }
+    
+    @objc func pickImage(){
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        navigationController?.present(imagePickerController, animated: true)
     }
     
     
@@ -104,4 +114,22 @@ class RegistrationController: UIViewController{
     
     
     //MARK: - properties
+}
+
+    //MARK: - UIImagePickerControllerDelegate
+extension RegistrationController : UIImagePickerControllerDelegate{
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image : UIImage? = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        picker.dismiss(animated: true)
+        imagePickerButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        imagePickerButton.layer.borderColor = UIColor.white.cgColor
+        imagePickerButton.layer.cornerRadius = 200/2
+        imagePickerButton.layer.borderWidth = 3.0
+    }
+}
+
+    //MARK: - UINavigationControllerDelegate
+extension RegistrationController : UINavigationControllerDelegate{
+    
 }
