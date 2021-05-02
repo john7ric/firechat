@@ -134,53 +134,16 @@ class RegistrationController: UIViewController{
         guard let fullname = fullnameTextfield.text else { return }
         guard let profilePictureData = profilePicture?.jpegData(compressionQuality: 0.3) else { return }
         
-        //creates the filename
+        let credentials = AuthCredentials(username: username, password: password, email: email, fullname: fullname, imageData: profilePictureData)
         
-        let filename = UUID().uuidString;
-        let ref = Storage.storage().reference(withPath: "/profile_path/\(filename)")
-        
-        ref.putData(profilePictureData, metadata: nil) { (data, error) in
-            
-            if let error = error {
-                print("DEBUG : failed to load profile picture with path \(error.localizedDescription)")
+        AuthService.shared.signUpUser(credentials:credentials) { (error) in
+            if let error = error{
+                print("DEBUG: store user details failed with error \(error.localizedDescription)")
                 return
             }
             
-            ref.downloadURL { (url, error) in
-                
-                guard let profileImageUrl = url?.absoluteString else { return }
-                
-                /// the proifile image upload is done
-                /// now creating the user with the given email and password
-                
-                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                    if let error = error{
-                        print("DEBUG: create user failed with error \(error.localizedDescription)")
-                    }
-                    
-                    guard let userId = result?.user.uid else { return }
-                    
-                    let dataToPost : [String: Any] = ["email" : email,
-                                                      "password": password,
-                                                      "username": username,
-                                                      "fullname" : fullname,
-                                                      "profileImageUrl": profileImageUrl]
-                    Firestore.firestore().collection("users").document(userId).setData(dataToPost) { (error) in
-                        if let error = error{
-                            print("DEBUG: store user details failed with error \(error.localizedDescription)")
-                            return
-                        }
-                        
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                    
-                }
-                
-                
-            }
+            self.dismiss(animated: true, completion: nil)
         }
-        
-        
         
     }
     
